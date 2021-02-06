@@ -18,7 +18,7 @@ import ec.edu.ups.modelo.Recarga;
 @Stateless
 public class RecargaDAO {
 
-	//Atributo de la clase
+
 			@PersistenceContext(name = "SistemaRecargaPersistenceUnit") 
 			private EntityManager em;
 			
