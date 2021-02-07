@@ -7,6 +7,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -19,9 +21,6 @@ public class Cliente implements Serializable{
 		private String nombre; 
 		private String apellido; 
 		private String correo;
-		
-		@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	    private List<Telefono> listaTelefonos;
 		
 		/** 
 		 * Constructor de la clase 
@@ -93,22 +92,5 @@ public class Cliente implements Serializable{
 		public void setCorreo(String correo) {
 			this.correo = correo;
 		}
-		
-		/** 
-		 * Metodo que permite obtener el atributo listaTelefonos
-		 * @return El atributo listaTelefonos de esta clase
-		 */
-		public List<Telefono> getListaTelefonos() {
-			return listaTelefonos;
-		}
-		
-		/** 
-		 * Metodo que me permite asignarle un valor al atributo listaTelefonos
-		 * @param listaTelefonos variable que se asigna al atributo de la clase
-		 */
-		public void setListaTelefonos(List<Telefono> listaTelefonos) {
-			this.listaTelefonos = listaTelefonos;
-		} 
-		
 		
 }

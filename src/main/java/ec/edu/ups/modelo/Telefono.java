@@ -14,104 +14,99 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Telefono implements Serializable{
-	
-	//Atributos de la  clase
+public class Telefono implements Serializable {
+
+	// Atributos de la clase
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	
+	private int idTefono;
+
 	private double saldo;
-	private int numero;
-	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name="cedula")
-    private Cliente cliente;
-	
-	@OneToMany(mappedBy = "telefono", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Recarga> listaRecargas;
-	
-	/** 
-	 * Metodo que permite obtener el atributo id 
+	private double saldoAnterior;
+	private String numero;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "cedula")
+	private Cliente cliente;
+
+	/**
+	 * Metodo que permite obtener el atributo id
+	 * 
 	 * @return El atributo id de esta clase
-	 */	
-	public int getId() {
-		return id;
-	}
-	
-	/** 
-	 * Metodo que permite asignarle un valor al atributo id 
-	 * @param id parametro para poder obtener 
 	 */
-	public void setId(int id) {
-		this.id = id;
+	public int getIdTefono() {
+		return idTefono;
 	}
-	
-	/** 
-	 * Metodo que permite obtener el atributo saldo 
+
+	/**
+	 * Metodo que permite asignarle un valor al atributo id
+	 * 
+	 * @param id parametro para poder obtener
+	 */
+	public void setIdTefono(int idTefono) {
+		this.idTefono = idTefono;
+	}
+
+	/**
+	 * Metodo que permite obtener el atributo saldo
+	 * 
 	 * @return El atributo saldo de esta clase
 	 */
 	public double getSaldo() {
 		return saldo;
 	}
-	
-	/** 
-	 * Metodo que permite asignarle un valor al atributo saldo 
-	 * @param saldo parametro para poder obtener 
+
+	/**
+	 * Metodo que permite asignarle un valor al atributo saldo
+	 * 
+	 * @param saldo parametro para poder obtener
 	 */
 	public void setSaldo(double saldo) {
 		this.saldo = saldo;
 	}
-	
-	/** 
-	 * Metodo que permite obtener el atributo numero 
+
+	/**
+	 * Metodo que permite obtener el atributo numero
+	 * 
 	 * @return El atributo numero de esta clase
 	 */
-	public int getNumero() {
+	public String getNumero() {
 		return numero;
 	}
-	
-	/** 
-	 * Metodo que permite asignarle un valor al atributo numero 
-	 * @param numero parametro para poder obtener 
+
+	/**
+	 * Metodo que permite asignarle un valor al atributo numero
+	 * 
+	 * @param numero parametro para poder obtener
 	 */
-	public void setNumero(int numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 
-	/** 
-	 * Metodo que permite obtener el atributo cliente 
+	/**
+	 * Metodo que permite obtener el atributo cliente
+	 * 
 	 * @return El atributo cliente de esta clase
 	 */
 	public Cliente getCliente() {
 		return cliente;
 	}
 
-	/** 
-	 * Metodo que permite asignarle un valor al atributo cliente 
-	 * @param cliente parametro para poder obtener 
+	/**
+	 * Metodo que permite asignarle un valor al atributo cliente
+	 * 
+	 * @param cliente parametro para poder obtener
 	 */
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
 
-	/** 
-	 * Metodo que permite obtener el atributo listaRecargas 
-	 * @return El atributo listaRecargas de esta clase
-	 */
-	public List<Recarga> getListaRecargas() {
-		return listaRecargas;
+	public double getSaldoAnterior() {
+		return saldoAnterior;
 	}
 
-	/** 
-	 * Metodo que permite asignarle un valor al atributo listaRecargas 
-	 * @param listaRecargas parametro para poder obtener 
-	 */
-	public void setListaRecargas(List<Recarga> listaRecargas) {
-		this.listaRecargas = listaRecargas;
+	public void setSaldoAnterior(double saldoAnterior) {
+		this.saldoAnterior = saldoAnterior;
 	}
-	
-	
-	
 
 }

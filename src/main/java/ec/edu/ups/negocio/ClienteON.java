@@ -30,7 +30,14 @@ public class ClienteON {
 	 */
 	public void guardarCliente(Cliente cliente) throws Exception {
 		try {
-			clientedao.insert(cliente);
+			Cliente aux = clientedao.read(cliente.getCedula());
+
+			if (aux != null) {
+				clientedao.update(cliente);
+			} else {
+				clientedao.insert(cliente);
+			}
+//			clientedao.insert(cliente);
 		} catch (Exception e) {
 				throw new Exception("Error al ingresar Cliente");
 		}

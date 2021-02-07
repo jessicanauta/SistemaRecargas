@@ -27,7 +27,11 @@ public class TelefonoDAO {
 	 * @param t Telefono que se va a registrar en la base
 	 */
 	public void insert(Telefono t) {
-		em.persist(t);
+		if (read(t.getIdTefono()) != null) {
+			em.persist(t);
+		} else {
+			update(t);
+		}
 	}
 	
 	/** 

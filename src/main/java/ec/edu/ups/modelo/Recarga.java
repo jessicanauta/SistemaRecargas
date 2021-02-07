@@ -19,12 +19,12 @@ public class Recarga implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idRecarga;
 	
-	private int numero;
+	private String numero;
 	private double saldo;
 	private String operadora;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name="id")
+	@JoinColumn(name="idTelefono")
     private Telefono telefono;
 	
 	/** 
@@ -47,7 +47,7 @@ public class Recarga implements Serializable{
 	 * Metodo que permite obtener el atributo numero 
 	 * @return El atributo numero de esta clase
 	 */
-	public int getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 	
@@ -55,7 +55,7 @@ public class Recarga implements Serializable{
 	 * Metodo que permite asignarle un valor al atributo numero 
 	 * @param numero parametro para poder obtener 
 	 */
-	public void setNumero(int numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 	
