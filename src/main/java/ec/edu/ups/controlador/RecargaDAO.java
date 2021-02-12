@@ -27,7 +27,11 @@ public class RecargaDAO {
 			 * @param r Recarga que se va a registrar en la base
 			 */
 			public void insert(Recarga r) {
-				em.persist(r);
+				if (read( r.getIdRecarga()) != null) {
+					em.persist(r);
+				} else {
+					update(r);
+				}
 			}
 			
 			/** 

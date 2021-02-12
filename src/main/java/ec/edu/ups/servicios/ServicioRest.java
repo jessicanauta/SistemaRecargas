@@ -2,9 +2,11 @@ package ec.edu.ups.servicios;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 
 import ec.edu.ups.modelo.Cliente;
 import ec.edu.ups.modelo.Telefono;
@@ -12,7 +14,7 @@ import ec.edu.ups.negocio.ClienteON;
 import ec.edu.ups.negocio.RecargaON;
 import ec.edu.ups.negocio.TelefonoON;
 
-@Path("comprar")
+@Path("/comprar")
 public class ServicioRest {
 
 	@Inject
@@ -24,14 +26,12 @@ public class ServicioRest {
 	@Inject
 	TelefonoON onTelefono;	
 	
-	@PUT
+	@GET
 	@Consumes("application/json")
-	@Path("crear/{cedula}/{nombre}/{apellido}/{correo}/{numero}/{saldo}/{saldoAnterior}")
-	public void crearCliente(@PathParam("cedula")String cedula,@PathParam("nombre")String nombre, @PathParam("apellido")String apellido, @PathParam("correo")String correo,@PathParam("numero")String numero,@PathParam("saldo") double saldo,@PathParam("saldoAnterior")double saldoAnterior ) throws Exception {
+	@Path("/crear")
+	public void crearCliente(@QueryParam("cedula")String cedula,@QueryParam("nombre")String nombre, @QueryParam("apellido")String apellido, @QueryParam("correo")String correo,@QueryParam("numero")String numero,@QueryParam("saldo") double saldo,@QueryParam("saldoAnterior")double saldoAnterior ) throws Exception {
 		Cliente c=new Cliente();
 		Telefono t=new Telefono();
-		c.setNombre(nombre);
-		c.setApellido(apellido);
 		c.setCedula(cedula);
 		c.setCorreo(correo);
 		onCliente.guardarCliente(c);

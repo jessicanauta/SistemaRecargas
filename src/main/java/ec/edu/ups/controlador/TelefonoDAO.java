@@ -64,6 +64,18 @@ public class TelefonoDAO {
 	 * Metodo que permite obtener los telefonos que estan registrados en la base de datos
 	 * @return Lista de telefonos que estan registrados en la base de datos
 	 */
+	public Telefono obtenerTelefono(String numero) {
+		String jpql = "SELECT t FROM Telefono t WHERE numero = :numero";
+
+		Query q = em.createQuery(jpql, Telefono.class);
+		q.setParameter("numero", numero);
+		return (Telefono) q.getSingleResult();
+	} 
+	
+	/** 
+	 * Metodo que permite obtener los telefonos que estan registrados en la base de datos
+	 * @return Lista de telefonos que estan registrados en la base de datos
+	 */
 	public List<Telefono> getTelefonos() {
 		String jpql = "SELECT t FROM Telefono t";
 

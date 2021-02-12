@@ -1,5 +1,8 @@
 package ec.edu.ups.servicios;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -24,19 +27,30 @@ public class ServicioSoap {
 	TelefonoON onTelefono;
 
 	@WebMethod
-	public void realizarRecarga(String numero, double Saldo, String operadora) throws Exception {
-//		Recarga r = new Recarga();
-//		Telefono t = onTelefono.buscarTelefono(numero);
-//		Cliente c = onCliente.buscarCliente(t.getCliente().getCedula());
-//		t.setCliente(c);
-//		r.setTelefono(t);
-//		onRecarga.guardarRecarga(r);
+	public void realizarRecarga(String numero, double saldo, String operadora) throws Exception {
+		Recarga r = new Recarga();
+		Telefono t = onTelefono.obtenerTelefono(numero);
+		r.setTelefono(t);
+		r.setOperadora(operadora);
+		r.setSaldo(saldo);
+		onRecarga.guardarRecarga(r);
+
+		if (t.getSaldoAnterior() != 0) {
+			t.setSaldoAnterior(t.getSaldoAnterior());
+			t.setSaldo(saldo + t.getSaldoAnterior());
+			onTelefono.actualizarTelefono(t);
+		} else {
+			t.setSaldoAnterior(t.getSaldo());
+			t.setSaldo(saldo + t.getSaldoAnterior());
+			onTelefono.actualizarTelefono(t);
+		}
 	}
 
 	@WebMethod
-	public void crearCliente(String cedula,String nombre, String apellido, String correo,String numero, double saldo, double saldoAnterior ) throws Exception {
-		Cliente c=new Cliente();
-		Telefono t=new Telefono();
+	public void crearCliente(String cedula, String nombre, String apellido, String correo, String numero, double saldo,
+			double saldoAnterior) throws Exception {
+		Cliente c = new Cliente();
+		Telefono t = new Telefono();
 		c.setNombre(nombre);
 		c.setApellido(apellido);
 		c.setCedula(cedula);
@@ -47,10 +61,30 @@ public class ServicioSoap {
 		t.setNumero(numero);
 		t.setSaldo(saldo);
 		t.setSaldoAnterior(saldoAnterior);
-		
-		onTelefono.guardarTelefono(t);
-		
 
+		onTelefono.guardarTelefono(t);
+
+	}
+	
+	@WebMethod
+	public ArrayList getRecargas(){
+		List datos=new ArrayList();
+		List<Recarga> lstRecargas=onRecarga.listaRecargas();
+		for (Recarga r : lstRecargas) {
+			//datods cliente
+			datos.add(r.getTelefono().getCliente().getCedula());
+			datos.add(r.getTelefono().getCliente().getNombre());
+			datos.add(r.getTelefono().getCliente().getApellido());
+			datos.add(r.getTelefono().getNumero());
+			datos.add(r.getTelefono().getSaldo());
+			datos.add(r.getTelefono().getSaldoAnterior());
+			
+			//saldo de rla recarga
+			datos.add(r.getOperadora());
+			datos.add(r.getSaldo());
+			
+		}
+		return  (ArrayList) datos;
 	}
 
 }

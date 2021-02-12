@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import ec.edu.ups.controlador.RecargaDAO;
+import ec.edu.ups.modelo.Cliente;
 import ec.edu.ups.modelo.Recarga;
 
 /**
@@ -30,9 +31,16 @@ public class RecargaON {
 	 */
 	public void guardarRecarga(Recarga recarga) throws Exception {
 		try {
-			recargadao.insert(recarga);
+			Recarga aux = recargadao.read(recarga.getIdRecarga());
+
+			if (aux != null) {
+				recargadao.update(recarga);
+			} else {
+				recargadao.insert(recarga);
+			}
+
 		} catch (Exception e) {
-				throw new Exception("Error al registrar la Recarga");
+				throw new Exception("Error al ingresar recarga");
 		}
 	}
 	

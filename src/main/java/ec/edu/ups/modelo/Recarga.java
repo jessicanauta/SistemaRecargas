@@ -19,7 +19,6 @@ public class Recarga implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idRecarga;
 	
-	private String numero;
 	private double saldo;
 	private String operadora;
 	
@@ -43,21 +42,7 @@ public class Recarga implements Serializable{
 		this.idRecarga = idRecarga;
 	}
 	
-	/** 
-	 * Metodo que permite obtener el atributo numero 
-	 * @return El atributo numero de esta clase
-	 */
-	public String getNumero() {
-		return numero;
-	}
-	
-	/** 
-	 * Metodo que permite asignarle un valor al atributo numero 
-	 * @param numero parametro para poder obtener 
-	 */
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
+
 	
 	/** 
 	 * Metodo que permite obtener el atributo saldo 

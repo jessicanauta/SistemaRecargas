@@ -51,6 +51,20 @@ public class TelefonoON {
 	 * 
 	 * @param telefono Telefono que se actualiza
 	 */
+	public Telefono obtenerTelefono(String numero) throws Exception{
+        try {
+        	return telefonodao.obtenerTelefono(numero);
+        } catch (Exception e) {
+        	throw new Exception("Error al obteners Telefono");
+        }
+    }
+	
+	
+	/**
+	 * Metodo que permite actualizar un telefono
+	 * 
+	 * @param telefono Telefono que se actualiza
+	 */
 	public void actualizarTelefono(Telefono telefono) throws Exception{
         try {
         	telefonodao.update(telefono);
