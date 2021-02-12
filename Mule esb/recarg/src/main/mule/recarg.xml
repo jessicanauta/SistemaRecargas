@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="68aac622-765a-466a-8a9d-9bd431870d54" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<wsc:config name="Web_Service_Consumer_Config" doc:name="Web Service Consumer Config" doc:id="fde7750c-8aa8-4421-8672-0fb394288de0" >
+		<wsc:connection wsdlLocation="http://localhost:8080/SistemaRecarga/ServicioSoap?wsdl" service="ServicioSoapService" port="ServicioSoapPort" address="http://localhost:8080/SistemaRecarga/ServicioSoap" >
+			<wsc:web-service-security actor="http://schemas.xmlsoap.org/soap/actor/next" />
+		</wsc:connection>
+	</wsc:config>
+	<flow name="recargFlow" doc:id="48edc00a-3662-48ad-be84-05077a58ae05" >
+		<http:listener doc:name="Listener" doc:id="23f549a8-28cf-4a45-94fd-cab0d9494093" config-ref="HTTP_Listener_config" path="sopare"/>
+		<set-payload value="#[payload]" doc:name="listarRecargas" doc:id="dc8bc8c7-8743-4059-aafa-0c89da97ebb9" />
+		<wsc:consume doc:name="listarRecargas" doc:id="effce533-66dd-4ce5-a8e0-d154f2ea0c4e" config-ref="Web_Service_Consumer_Config" operation="getRecargas"/>
+	</flow>
+</mule>
