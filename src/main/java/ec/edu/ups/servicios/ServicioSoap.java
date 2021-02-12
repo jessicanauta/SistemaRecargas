@@ -82,9 +82,10 @@ public class ServicioSoap {
 			//saldo de rla recarga
 			datos.add(r.getOperadora());
 			datos.add(r.getSaldo());
+			System.out.println(""+datos);
 			
 		}
-		return  (ArrayList) datos;
+		return (ArrayList) datos;
 	}
 
 }
