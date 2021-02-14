@@ -109,4 +109,12 @@ public class Telefono implements Serializable {
 		this.saldoAnterior = saldoAnterior;
 	}
 
+	@Override
+	public String toString() {
+		return "Telefono [idTefono=" + idTefono + ", saldo=" + saldo + ", saldoAnterior=" + saldoAnterior + ", numero="
+				+ numero + ", cliente=" + cliente + "]";
+	}
+	
+	
+
 }

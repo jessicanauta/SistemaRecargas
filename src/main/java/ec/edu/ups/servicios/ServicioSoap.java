@@ -27,9 +27,12 @@ public class ServicioSoap {
 	TelefonoON onTelefono;
 
 	@WebMethod
-	public void realizarRecarga(String numero, double saldo, String operadora) throws Exception {
+	public String realizarRecarga(String numero, double saldo, String operadora) throws Exception {
 		Recarga r = new Recarga();
 		Telefono t = onTelefono.obtenerTelefono(numero);
+		System.out.println("telefono" + t);
+		//Telefono t = onTelefono.buscarTelefono(numero);
+		//System.out.println("teeeeeeelefono: "+t);
 		r.setTelefono(t);
 		r.setOperadora(operadora);
 		r.setSaldo(saldo);
@@ -44,10 +47,12 @@ public class ServicioSoap {
 			t.setSaldo(saldo + t.getSaldoAnterior());
 			onTelefono.actualizarTelefono(t);
 		}
+		
+		return "Recarga realizada con éxito";
 	}
 
 	@WebMethod
-	public void crearCliente(String cedula, String nombre, String apellido, String correo, String numero, double saldo,
+	public String crearCliente(String cedula, String nombre, String apellido, String correo, String numero, double saldo,
 			double saldoAnterior) throws Exception {
 		Cliente c = new Cliente();
 		Telefono t = new Telefono();
@@ -63,6 +68,8 @@ public class ServicioSoap {
 		t.setSaldoAnterior(saldoAnterior);
 
 		onTelefono.guardarTelefono(t);
+		
+		return "Cliente registrado con éxito";
 
 	}
 	

@@ -40,6 +40,8 @@ public class ServicioRest {
 		Cliente c=new Cliente();
 		Telefono t=new Telefono();
 		c.setCedula(cedula);
+		c.setNombre(nombre);
+		c.setApellido(apellido);
 		c.setCorreo(correo);
 		onCliente.guardarCliente(c);
 

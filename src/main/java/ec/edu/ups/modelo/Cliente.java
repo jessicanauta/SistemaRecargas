@@ -92,5 +92,11 @@ public class Cliente implements Serializable{
 		public void setCorreo(String correo) {
 			this.correo = correo;
 		}
+		@Override
+		public String toString() {
+			return "Cliente [cedula=" + cedula + ", nombre=" + nombre
+					+ "]";
+		}
+		
 		
 }

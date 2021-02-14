@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="369bca06-5daf-48b7-9e91-5b7568d07c79" basePath="mypath">
+		<http:listener-connection host="localhost" port="18081" />
+	</http:listener-config>
+	<wsc:config name="Web_Service_Consumer_Config" doc:name="Web Service Consumer Config" doc:id="f0d56ba9-1b14-4f21-8945-9f9da9f9870f" >
+		<wsc:connection wsdlLocation="http://localhost:8080/SistemaRecarga/ServicioSoap?wsdl" service="ServicioSoapService" port="ServicioSoapPort" address="http://localhost:8080/SistemaRecarga/ServicioSoap"/>
+	</wsc:config>
+	<flow name="pruebaFlow" doc:id="5d2db658-0145-4239-9ccb-0bbd91524a37" >
+		<http:listener doc:name="Listener" doc:id="39abb145-9295-43fa-8d39-91b3ef53d91d" config-ref="HTTP_Listener_config" path="/requests"/>
+		<logger level="INFO" doc:name="Logger" doc:id="2e903009-8212-4702-a83f-857863fd6f55" message="#[message.attributes.queryParams]"/>
+		<ee:transform doc:name="Transform Message" doc:id="7dd86592-92ad-417f-86a5-9c8c7269dc93" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://servicios.ups.edu.ec/
+---
+{
+	ns0#crearCliente: {
+		arg0: attributes.queryParams.arg0 as String,
+		arg1: attributes.queryParams.arg1 as String,
+		arg2: attributes.queryParams.arg2 as String,
+		arg3: attributes.queryParams.arg3 as String,
+		arg4: attributes.queryParams.arg4 as String,
+		arg5: attributes.queryParams.arg5 as Number,
+		arg6: attributes.queryParams.arg6 as Number
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<wsc:consume operation="crearCliente" doc:name="Consume" doc:id="16346071-556b-4a6c-ae73-d6cbe433d98c" config-ref="Web_Service_Consumer_Config"/>
+	</flow>
+</mule>

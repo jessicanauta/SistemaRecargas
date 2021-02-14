@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="6f2cf430-d6dc-4f52-b0a7-820e70606ba6" >
+		<http:listener-connection host="localhost" port="18082" />
+	</http:listener-config>
+	<wsc:config name="Web_Service_Consumer_Config" doc:name="Web Service Consumer Config" doc:id="dfd1c575-ad20-4be5-a8b7-7fcaeab85da6" >
+		<wsc:connection wsdlLocation="http://localhost:8080/SistemaRecarga/ServicioSoap?wsdl" service="ServicioSoapService" port="ServicioSoapPort" address="http://localhost:8080/SistemaRecarga/ServicioSoap" />
+	</wsc:config>
+	<flow name="recargaFlow" doc:id="c4820fa0-0931-40f0-85fe-401c67d4f499" >
+		<http:listener doc:name="Listener" doc:id="68c7d9ce-7fac-4234-b06a-703f3648d862" config-ref="HTTP_Listener_config" path="/recarga"/>
+		<logger level="INFO" doc:name="Logger" doc:id="522c36f3-28c2-48e6-a5fe-498e33d9eb6c" message="#[message.attributes.queryParams]"/>
+		<ee:transform doc:name="Transform Message" doc:id="291755b7-79ec-418f-a609-7226b1c7e2e9" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://servicios.ups.edu.ec/
+---
+{
+	ns0#realizarRecarga: {
+		arg0: attributes.queryParams.arg0 as String,
+		arg1: attributes.queryParams.arg1 as Number,
+		arg2: attributes.queryParams.arg2 as String
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<wsc:consume operation="realizarRecarga" doc:name="Consume" doc:id="dca52fc3-43d8-4854-9340-d9b73b46502b" config-ref="Web_Service_Consumer_Config"/>
+	</flow>
+</mule>

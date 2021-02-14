@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import ec.edu.ups.modelo.Cliente;
 import ec.edu.ups.modelo.Telefono;
 
 /** 
@@ -49,7 +51,11 @@ public class TelefonoDAO {
 	 */
 	public Telefono read(int id) {
 		return em.find(Telefono.class, id);
-	} 
+	}
+	
+	public Telefono buscar(String numero) {
+		return em.find(Telefono.class, numero);
+	}
 	
 	/** 
 	 * Metodo que permite eliminar un telefono de la base de datos
@@ -66,19 +72,17 @@ public class TelefonoDAO {
 	 */
 	public Telefono obtenerTelefono(String numero) {
 		String jpql = "SELECT t FROM Telefono t WHERE numero = :numero";
-
 		Query q = em.createQuery(jpql, Telefono.class);
 		q.setParameter("numero", numero);
-		return (Telefono) q.getSingleResult();
+		return (Telefono)q.getSingleResult();
 	} 
-	
+ 
 	/** 
 	 * Metodo que permite obtener los telefonos que estan registrados en la base de datos
 	 * @return Lista de telefonos que estan registrados en la base de datos
 	 */
 	public List<Telefono> getTelefonos() {
 		String jpql = "SELECT t FROM Telefono t";
-
 		Query q = em.createQuery(jpql, Telefono.class);
 		return q.getResultList();
 	} 

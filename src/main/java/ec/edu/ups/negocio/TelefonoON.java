@@ -55,7 +55,15 @@ public class TelefonoON {
         try {
         	return telefonodao.obtenerTelefono(numero);
         } catch (Exception e) {
-        	throw new Exception("Error al obteners Telefono");
+        	throw new Exception("Error al obtener Telefono");
+        }
+    }
+	
+	public Telefono buscarTelefono(String numero) throws Exception{
+        try {
+        	return telefonodao.buscar(numero);
+        } catch (Exception e) {
+        	throw new Exception("Error al buscar el Telefono");
         }
     }
 	
